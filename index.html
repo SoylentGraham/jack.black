@@ -1,1 +1,99 @@
-&clubs;
+<html>
+	<head>
+	
+	<style>
+		
+		body
+		{
+			
+		}
+	
+		.Button
+		{
+			display:	inline-block;
+			width:		20vmin;
+			height:		20vmin;
+			background:	#fc1;
+			font-size:	20vmin;
+			text-align:	center;
+			font-weight:	bold;
+			font-family:	sans-serif;
+			margin:		2vw;
+			overflow:	hidden;
+			-webkit-user-select: none;  /* Chrome all / Safari all */
+			-moz-user-select: none;     /* Firefox all */
+			-ms-user-select: none;      /* IE 10+ */
+			user-select: none;
+		}
+	
+	</style>
+	</head>
+	<body>
+		
+		<script src='PopEngineCommon/PopWebApi.js'></script>
+		<script src='PopEngineCommon/PopApi.js'></script>
+		<script src='PopEngineCommon/PopWebOpenglApi.js'></script>
+		<script src='PopEngineCommon/PopWebGuiApi.js'></script>
+		<script src='PopEngineCommon/PopWebImageApi.js'></script>
+		<script src='PopEngineCommon/PopWebSocketApi.js'></script>
+		<script src='PopEngineCommon/PopWebXrApi.js'></script>
+		<script src='PopEngineCommon/PopWebAudioApi.js'></script>
+		
+		<script src='PopEngineCommon/PopSvg.js'></script>
+		<script src='PopEngineCommon/PopMath.js'></script>
+		<script src='PopEngineCommon/ParamsWindow.js'></script>
+		<script src='PopEngineCommon/PopFrameCounter.js'></script>
+		<script src='PopEngineCommon/PopMidi.js'></script>
+		
+		<div style="float:clear">&clubs;</div>
+		<div id=a class=Button>?</div>
+		<div id=b class=Button>?</div>
+		<div id=c class=Button>?</div>
+		<div id=d class=Button>?</div>
+		<div id=e class=Button>?</div>
+		<div id=f class=Button>?</div>
+		<div id=g class=Button>?</div>
+		<div id=h class=Button>?</div>
+		<div id=i class=Button>?</div>
+		<div id=j class=Button>?</div>
+		<div id=k class=Button>?</div>
+		<div id=l class=Button>?</div>
+		<div id=m class=Button>?</div>
+		<div id=n class=Button>?</div>
+		<div id=o class=Button>?</div>
+		<div id=p class=Button>?</div>
+		
+		
+		<script>
+			
+			const Storage = {};
+			
+			async function LoadElement(Letter)
+			{
+				const Filename = `Samples/${Letter}.wav`;
+				const AudioData = await Pop.LoadFileAsArrayBufferAsync(Filename);
+				const Sound = new Pop.Audio.Sound(AudioData,Filename);
+				const Button = new Pop.Gui.Button(Letter);
+				Button.Element.innerText = Letter.toUpperCase();
+				Button.OnClicked = function()
+				{
+					Sound.Seek(0);
+					Sound.Play();
+				}
+				const Store = {};
+				Store.Sound = Sound;
+				Store.Button = Button;
+				Storage[Letter] = Store;
+			}
+			
+			async function Load()
+			{
+				const Letters = "abcdefghijklmnop".split('');
+				for ( let Letter of Letters )
+					await LoadElement(Letter);
+			}
+	Load();
+	</script>
+	</body>
+	</html>
+
